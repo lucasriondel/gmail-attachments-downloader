@@ -48,7 +48,7 @@ You can add new rules by creating new instances of the `Rule` object :
 Here's a list of the properties the `Rule` object can handle: 
 ### Required Properties
 | **Property** | **Definition**
-|--|--|--|
+|--|--|
 | `name` | The name of the rule, useful for console displayed messages only
 | `sender` | The email of the sender it should look for
 | `mimeType` | The [mimeType](https://en.wikipedia.org/wiki/Media_type) of the file it should look for
