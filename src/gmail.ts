@@ -1,4 +1,4 @@
-import {OAuth2Client} from "google-auth-library";
+import { OAuth2Client } from "google-auth-library";
 
 interface ListMessagesItem {
     id: string;
@@ -59,6 +59,8 @@ export const listMessagesFrom = async (auth: OAuth2Client, from: string, unread:
                 q: `from:${from}` + (unread ? ` is:unread` : '')
             }
         });
+        if (!response.data.hasOwnProperty('messages'))
+            return [];
         return (response.data as ListMessagesResponse).messages;
     } catch(e) {
         throw e;

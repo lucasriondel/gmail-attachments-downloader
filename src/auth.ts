@@ -1,10 +1,11 @@
 import * as url from "url";
 import * as http from "http";
 import * as querystring from "querystring";
-import {OAuth2Client} from "google-auth-library";
+import { OAuth2Client } from "google-auth-library";
 const opn = require('opn');
 
-// Download your OAuth2 configuration from the Google
+// Download your OAuth2 configuration from Google Developer Console
+// https://console.developers.google.com/projectcreate
 const keys = require('../client_secret.json');
 
 /**

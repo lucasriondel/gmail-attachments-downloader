@@ -1,7 +1,7 @@
 {
   "name": "gmail-attachments-downloader",
   "version": "1.0.0",
-  "description": "Gmail Attachment Downloader is a node.js script that allows you to define rules in order to scrap your emails and download attachments so they can be uploaded to a specific folder on your Google Drive.",
+  "description": "Gmail Attachments Downloader is a node.js script that allows you to define rules in order to scrap your emails and download attachments so they can be uploaded to a specific folder on your Google Drive.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
