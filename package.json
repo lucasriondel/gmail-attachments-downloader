@@ -1,0 +1,32 @@
+{
+  "name": "gmail-attachments-downloader",
+  "version": "1.0.0",
+  "description": "Gmail Attachment Downloader is a node.js script that allows you to define rules in order to scrap your emails and download attachments so they can be uploaded to a specific folder on your Google Drive.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasriondel/gmail-attachments-downloader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasriondel/gmail-attachments-downloader/issues"
+  },
+  "homepage": "https://github.com/lucasriondel/gmail-attachments-downloader#readme",
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "^9.4.5",
+    "@types/opn": "^5.1.0",
+    "axios": "^0.17.1",
+    "base64topdf": "^1.1.8",
+    "google-auth-library": "^1.2.1",
+    "googleapis": "^25.0.0",
+    "mkdirp": "^0.5.1",
+    "opn": "^5.2.0"
+  }
+}
