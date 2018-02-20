@@ -80,5 +80,6 @@ Once you've done the setup, launch the following commands:
  - npm package
  - save google oauth token locally
  - more rule customization 
+ - scheduled scans
 
 :watermelon:
