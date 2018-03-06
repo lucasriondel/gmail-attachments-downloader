@@ -4,3 +4,4 @@ downloads/
 client_secret.json
 secret_tokens.json
 src/config/userConfiguration.ts
+.vscode
