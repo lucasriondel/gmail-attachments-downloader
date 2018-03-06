@@ -16,7 +16,9 @@ function createFolder(name: string) {
 }
 
 function log(rule: string, message: string) {
-    console.log(`${chalk.white.bgCyan(rule)} ${chalk.white(message)}`);
+    const d = new Date();
+    const time = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+    console.log(`[${time}] ${chalk.white.bgCyan(rule)} ${chalk.white(message)}`);
 }
 
 async function main() {
