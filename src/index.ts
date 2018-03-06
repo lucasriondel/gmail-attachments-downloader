@@ -3,10 +3,11 @@ import { base64Decode } from 'base64topdf';
 import * as mkdirp from 'mkdirp';
 import chalk from 'chalk';
 
-import { getAuthenticatedClient } from "./auth";
-import { extractParts, getAttachmentInfo, getMessageInfo, listMessagesFrom, markAsRead, ListMessagesItem } from "./gmail";
-import { folderExists, uploadFile } from './drive';
-import configuration from './configuration';
+import { getAuthenticatedClient } from "./google/auth";
+import { extractParts, getAttachmentInfo, getMessageInfo, listMessagesFrom, markAsRead, ListMessagesItem } from "./google/gmail";
+import { folderExists, uploadFile } from './google/drive';
+import configuration from './config/userConfiguration';
+import Rule from './config/configuration';
 
 function createFolder(name: string) {
     return new Promise((resolve, reject) => {
