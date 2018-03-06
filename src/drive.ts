@@ -51,7 +51,6 @@ export const uploadFile = async (auth: OAuth2Client, filename: string, parentFol
             rStream.push(finale);
             rStream.push(null);
         }
-        debugger;
         const response =  await auth.request({
             url: 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
             method: 'post',
