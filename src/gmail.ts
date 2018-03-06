@@ -1,6 +1,6 @@
 import { OAuth2Client } from "google-auth-library";
 
-interface ListMessagesItem {
+export interface ListMessagesItem {
     id: string;
     threadId: string;
 }

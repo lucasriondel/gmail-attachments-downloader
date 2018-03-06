@@ -1,9 +1,10 @@
 import { OAuth2Client } from 'google-auth-library';
 import { base64Decode } from 'base64topdf';
 import * as mkdirp from 'mkdirp';
+import chalk from 'chalk';
 
 import { getAuthenticatedClient } from "./auth";
-import { extractParts, getAttachmentInfo, getMessageInfo, listMessagesFrom, markAsRead } from "./gmail";
+import { extractParts, getAttachmentInfo, getMessageInfo, listMessagesFrom, markAsRead, ListMessagesItem } from "./gmail";
 import { folderExists, uploadFile } from './drive';
 import configuration from './configuration';
 
@@ -14,16 +15,23 @@ function createFolder(name: string) {
     });
 }
 
+function log(rule: string, message: string) {
+    console.log(`${chalk.white.bgCyan(rule)} ${chalk.white(message)}`);
+}
+
 async function main() {
     try {
         const auth = (await getAuthenticatedClient()) as OAuth2Client;
         for (const rule of configuration) {
-            const messagesList = await listMessagesFrom(auth, rule.sender, rule.unreadEmailsOnly);
+            log(rule.name, 'rule start');
+            const messagesList = await listMessagesFrom(auth, rule.sender, rule.unreadEmailsOnly) as ListMessagesItem[];
+            log(rule.name, `${String(messagesList.length)} messages found`);
             for (const messageItem of messagesList) {
                 const message = await getMessageInfo(auth, messageItem.id);
                 const parts = extractParts(message);
-                for (let part of parts) {
+                for (const part of parts) {
                     if (part.mimeType === rule.mimeType) {
+                        log(rule.name, `attachment '${part.filename}' found `);
                         const attachment = await getAttachmentInfo(auth, part.attachmentId, message.id);
                         await createFolder('downloads/');
                         const newFileName = rule.renameCallback(part.filename);
@@ -34,17 +42,19 @@ async function main() {
                         }
                         const uploadedFile = await uploadFile(auth,
                             newFileName, parentFolder.id, `downloads/${newFileName}`, part.mimeType);
-                        console.log(`[${rule.name}] File '${newFileName}' has been created at '${rule.destination}' (original: ${part.filename})`);
+                        log(rule.name, `file '${newFileName}' has been created at '${rule.destination}' (original: ${part.filename})`);
                         if (rule.markAsRead) {
                             await markAsRead(auth, message.id);
                         }
                     }
                 }
             }
+            console.log('');
         }
         process.exit(0);
     } catch (e) {
         console.error(e);
+        process.exit(1);
     }
 }
 
