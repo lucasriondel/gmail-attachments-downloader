@@ -1,8 +1,10 @@
+import { readFileSync } from 'fs';
 import { OAuth2Client } from 'google-auth-library';
 import { base64Decode } from 'base64topdf';
 import * as mkdirp from 'mkdirp';
 import * as cron from 'node-cron';
 import chalk from 'chalk';
+import { ArgumentParser } from 'argparse';
 
 import { getAuthenticatedClient } from "./google/auth";
 import { extractParts, getAttachmentInfo, getMessageInfo, listMessagesFrom, markAsRead, ListMessagesItem } from "./google/gmail";
@@ -60,9 +62,23 @@ async function scanEmails() {
     }
 }
 
-
-cron.schedule('*/1 * * * *', function(){
-    scanEmails();    
+const parser = new ArgumentParser({
+    version: JSON.parse(readFileSync('package.json', 'utf8')).version,
 });
 
+parser.addArgument(
+    ['-c', '--cron'],
+    {
+        help: "CRON scheduler, same syntax as the one used by https://www.npmjs.com/package/node-cron. Default is every 20 minutes."
+    }
+)
+
+var args = parser.parseArgs();
+if (args.cron === null) {
+    args.cron = '*/20 * * * *'; 
+}
+
 scanEmails();
+cron.schedule(args.cron, function(){
+    scanEmails();    
+});
