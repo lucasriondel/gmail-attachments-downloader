@@ -1,6 +1,7 @@
 import { OAuth2Client } from 'google-auth-library';
 import { base64Decode } from 'base64topdf';
 import * as mkdirp from 'mkdirp';
+import * as cron from 'node-cron';
 import chalk from 'chalk';
 
 import { getAuthenticatedClient } from "./google/auth";
@@ -22,7 +23,7 @@ function log(rule: string, message: string) {
     console.log(`[${time}] ${chalk.white.bgCyan(rule)} ${chalk.white(message)}`);
 }
 
-async function main() {
+async function scanEmails() {
     try {
         const auth = (await getAuthenticatedClient()) as OAuth2Client;
         for (const rule of configuration) {
@@ -54,11 +55,14 @@ async function main() {
             }
             console.log('');
         }
-        process.exit(0);
     } catch (e) {
         console.error(e);
-        process.exit(1);
     }
 }
 
-main();
+
+cron.schedule('*/1 * * * *', function(){
+    scanEmails();    
+});
+
+scanEmails();
