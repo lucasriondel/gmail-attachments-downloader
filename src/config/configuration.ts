@@ -9,15 +9,15 @@ interface RuleConfiguration {
     renameCallback?: (originalFilename: string) => string;
 }
 
-class Rule implements RuleConfiguration {
-    name: string;
-    sender: string;
-    mimeType: string;
-    destination: string;
+export default class Rule implements RuleConfiguration {
+        name: string;
+        sender: string;
+        mimeType: string;
+        destination: string;
 
-    unreadEmailsOnly?: boolean;
-    markAsRead?: boolean;
-    renameCallback?: (originalFilename: string) => string;
+        unreadEmailsOnly?: boolean;
+        markAsRead?: boolean;
+        renameCallback?: (originalFilename: string) => string;
 
     constructor(configuration: RuleConfiguration) {
         this.name = configuration.name;
@@ -33,22 +33,3 @@ class Rule implements RuleConfiguration {
             configuration.renameCallback : ofn => ofn;
     }
 }
-
-const myConfiguration: Rule[] = [
-    new Rule({
-        //Required
-        name: 'The Lil Uzi Vert Rule',
-        sender: 'liluzivert@notagain.com',
-        mimeType: 'application/pdf',
-        destination: '/rappers/uzi',
-
-        //Optional
-        unreadEmailsOnly: false,
-        markAsRead: true,
-        renameCallback: (originalFilename: string) => {
-            return `Uzi_${originalFilename}`;
-        },
-    }),
-];
-
-export default myConfiguration;

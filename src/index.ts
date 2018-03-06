@@ -1,12 +1,16 @@
+import { readFileSync } from 'fs';
 import { OAuth2Client } from 'google-auth-library';
 import { base64Decode } from 'base64topdf';
 import * as mkdirp from 'mkdirp';
+import * as cron from 'node-cron';
 import chalk from 'chalk';
+import { ArgumentParser } from 'argparse';
 
-import { getAuthenticatedClient } from "./auth";
-import { extractParts, getAttachmentInfo, getMessageInfo, listMessagesFrom, markAsRead, ListMessagesItem } from "./gmail";
-import { folderExists, uploadFile } from './drive';
-import configuration from './configuration';
+import { getAuthenticatedClient } from "./google/auth";
+import { extractParts, getAttachmentInfo, getMessageInfo, listMessagesFrom, markAsRead, ListMessagesItem } from "./google/gmail";
+import { folderExists, uploadFile } from './google/drive';
+import configuration from './config/userConfiguration';
+import Rule from './config/configuration';
 
 function createFolder(name: string) {
     return new Promise((resolve, reject) => {
@@ -21,7 +25,7 @@ function log(rule: string, message: string) {
     console.log(`[${time}] ${chalk.white.bgCyan(rule)} ${chalk.white(message)}`);
 }
 
-async function main() {
+async function scanEmails() {
     try {
         const auth = (await getAuthenticatedClient()) as OAuth2Client;
         for (const rule of configuration) {
@@ -53,11 +57,28 @@ async function main() {
             }
             console.log('');
         }
-        process.exit(0);
     } catch (e) {
         console.error(e);
-        process.exit(1);
     }
 }
 
-main();
+const parser = new ArgumentParser({
+    version: JSON.parse(readFileSync('package.json', 'utf8')).version,
+});
+
+parser.addArgument(
+    ['-c', '--cron'],
+    {
+        help: "CRON scheduler, same syntax as the one used by https://www.npmjs.com/package/node-cron. Default is every 20 minutes."
+    }
+)
+
+var args = parser.parseArgs();
+if (args.cron === null) {
+    args.cron = '*/20 * * * *'; 
+}
+
+scanEmails();
+cron.schedule(args.cron, function(){
+    scanEmails();    
+});

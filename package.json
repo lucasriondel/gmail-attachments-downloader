@@ -18,17 +18,21 @@
   },
   "homepage": "https://github.com/lucasriondel/gmail-attachments-downloader#readme",
   "dependencies": {
+    "@types/argparse": "^1.0.33",
     "@types/axios": "^0.14.0",
     "@types/base64topdf": "^1.1.0",
     "@types/mkdirp": "^0.5.2",
     "@types/node": "^9.4.5",
+    "@types/node-cron": "^1.2.0",
     "@types/opn": "^5.1.0",
+    "argparse": "^1.0.10",
     "axios": "^0.17.1",
     "base64topdf": "^1.1.8",
     "chalk": "^2.3.2",
     "google-auth-library": "^1.2.1",
     "googleapis": "^25.0.0",
     "mkdirp": "^0.5.1",
+    "node-cron": "^1.2.1",
     "opn": "^5.2.0"
   }
 }

@@ -8,7 +8,7 @@ const opn = require('opn');
 
 // Download your OAuth2 configuration from Google Developer Console
 // https://console.developers.google.com/projectcreate
-const keys = require('../client_secret.json');
+const keys = require('../../client_secret.json');
 const tokensFilePath = "secret_tokens.json";
 /**
  * Create a new OAuth2Client, and go through the OAuth2 content
