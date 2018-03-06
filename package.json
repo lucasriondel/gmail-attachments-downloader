@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lucasriondel/gmail-attachments-downloader#readme",
   "dependencies": {
     "@types/axios": "^0.14.0",
+    "@types/base64topdf": "^1.1.0",
     "@types/mkdirp": "^0.5.2",
     "@types/node": "^9.4.5",
     "@types/opn": "^5.1.0",
