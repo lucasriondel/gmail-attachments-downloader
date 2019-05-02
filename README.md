@@ -25,8 +25,8 @@ Clone the repository, then add a client_secret.json file in the root folder. It 
 
 > In the future, this part will be handled by a server of mine, so you don't have to worry about the app authentification.
 ## Configuration File 
-Gmail Attachment Downloader needs to know some rules so it can behave the way you want it to behave. This is done by modifying `src/configuration.ts` .
-It contains a variable myConfiguration, which is an array of `Rule`.
+Gmail Attachment Downloader needs to know some rules so it can behave the way you want it to behave. This is done by modifying `src/userConfiguration.ts` .
+It has to export as default an array of `Rule` (see [configuration.ts](https://github.com/lucasriondel/gmail-attachments-downloader/blob/master/src/config/configuration.ts)).
 You can add new rules by creating new instances of the `Rule` object :
    
 
