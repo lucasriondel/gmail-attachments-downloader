@@ -74,12 +74,4 @@ Once you've done the setup, launch the following commands:
     tsc
     node build/index.js
 
-# What's next
-
- - auth server
- - npm package
- - save google oauth token locally
- - more rule customization 
- - scheduled scans
-
 :watermelon:
